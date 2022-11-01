@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import useForm from '../../hooks/form.js';
-
+import { useEffect, useState, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
+import { SettingsContext } from '../../Context/Settings/Settings';
+import useForm from '../../hooks/form';
+
 
 const ToDo = () => {
 
-  const [defaultValues] = useState({
-    difficulty: 4,
-  });
-  const [list, setList] = useState([]);
-  const [incomplete, setIncomplete] = useState([]);
+  const {defaultValues, list, setList, incomplete, setIncomplete} = useContext(SettingsContext);
+
+  // const [defaultValues] = useState({difficulty: 3});
+  // const [list, setList] = useState([]);
+  // const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
   function addItem(item) {
@@ -19,13 +20,12 @@ const ToDo = () => {
     setList([...list, item]);
   }
 
-  function deleteItem(id) {
+  const deleteItem = (id) => {
     const items = list.filter( item => item.id !== id );
     setList(items);
   }
 
   function toggleComplete(id) {
-
     const items = list.map( item => {
       if ( item.id === id ) {
         item.complete = ! item.complete;
@@ -34,7 +34,6 @@ const ToDo = () => {
     });
 
     setList(items);
-
   }
 
   useEffect(() => {
@@ -51,6 +50,7 @@ const ToDo = () => {
       <header data-testid="todo-header">
         <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
       </header>
+
 
       <form onSubmit={handleSubmit}>
 
