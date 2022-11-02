@@ -1,6 +1,7 @@
 # ToDo App
 
 Class 31 - Set up basic structure and separated out components.
+Class 32 - Update settings to have a page which will allow user to change configuration settings for the page. 
 
 Global State lives in src/Context/Settings/Settings.jsx
 
