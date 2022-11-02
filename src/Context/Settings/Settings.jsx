@@ -8,17 +8,21 @@ const SettingsProvider = ({children}) =>{
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
 
-  // const [mode, setMode] = useState('dark');
-  // const [sort, setSort] = useState();
-  // const [num, setNum] = useState(3);
+  const [showCompleted, setShowCompleted] = useState(false);
+  const [sort, setSort] = useState();
+  const [pageItems, setPageItems] = useState(3);
+
   // const [show, setShow] = useState(true);
+  // const [mode, setMode] = useState('dark');
 
 
   const values = {
-    // mode,
-    // sort,
-    // num,
-    // show,
+    pageItems,
+    setPageItems,
+    sort,
+    setSort,
+    showCompleted,
+    setShowCompleted,
     list,
     setList,
     incomplete,

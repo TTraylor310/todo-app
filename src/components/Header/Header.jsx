@@ -1,9 +1,11 @@
 import { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SettingsContext } from '../../Context/Settings/Settings';
+// import '../../styles.css';
 
 const Header = () => {
 
-  const {incomplete, list, setIncomplete} = useContext(SettingsContext);
+  const { incomplete, list, setIncomplete } = useContext(SettingsContext);
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
@@ -15,12 +17,21 @@ const Header = () => {
   }, [list]);
 
   return (
-    <div className='header'>
-      Home
-      <header data-testid="todo-header">
-        <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
-      </header>
-    </div>
+    <>
+      <div className='linkContainer'>
+        <Link to='/' className='Link'>
+          Home
+        </Link>
+        <Link to='/settings' className='Link'>
+          Settings
+        </Link>
+      </div>
+      <div className='header'>
+        <header data-testid="todo-header">
+          <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
+        </header>
+      </div>
+    </>
   )
 }
 
