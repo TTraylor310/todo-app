@@ -10,9 +10,16 @@ const useForm = (callback, defaultValues={}) => {
   };
 
   const handleChange = (event) => {
-    event.persist();
+    let name, value;
+    if(typeof(event) === 'object'){
+      name = event.target.name;
+      value = event.target.value;
+    } else {
+      console.log('event from slider', event)
+      name = 'difficulty';
+      value = event;
+    }
 
-    let { name, value } = event.target;
     if (parseInt(value)) {
       value = parseInt(value);
     }
