@@ -9,25 +9,22 @@ const SettingsProvider = ({children}) =>{
   const [incomplete, setIncomplete] = useState([]);
 
   const [showCompleted, setShowCompleted] = useState(false);
-  const [sort, setSort] = useState();
+  const [sort, setSort] = useState('difficulty');
   const [pageItems, setPageItems] = useState(3);
-
-  // const [show, setShow] = useState(true);
-  // const [mode, setMode] = useState('dark');
 
 
   const values = {
-    pageItems,
-    setPageItems,
-    sort,
-    setSort,
-    showCompleted,
-    setShowCompleted,
     list,
     setList,
     incomplete,
     setIncomplete,
-    defaultValues
+    defaultValues,
+    showCompleted,
+    setShowCompleted,
+    sort,
+    setSort,
+    pageItems,
+    setPageItems,
   }
 
   return (
@@ -35,7 +32,6 @@ const SettingsProvider = ({children}) =>{
       {children}
     </SettingsContext.Provider>
   )
-
 }
 
 export default SettingsProvider;

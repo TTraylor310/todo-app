@@ -1,38 +1,32 @@
-import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SettingsContext } from '../../Context/Settings/Settings';
-// import '../../styles.css';
+import { createStyles, Header, Navbar, Group } from '@mantine/core';
 
-const Header = () => {
+const useStyles = createStyles((theme) => ({
+  navbar: {
+    backgroundColor: theme.colors.blue[7],
+    padding: theme.spacing.md,
+    fontSize: theme.fontSizes.md,
+    color: theme.colors.gray[0],
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.colors.gray[0],
+  }
+}))
 
-  const { incomplete, list, setIncomplete } = useContext(SettingsContext);
-
-  useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length;
-    setIncomplete(incompleteCount);
-    document.title = `To Do List: ${incomplete}`;
-    // linter will want 'incomplete' added to dependency array unnecessarily. 
-    // disable code used to avoid linter warning 
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [list]);
+const BigHeader = () => {
+  const { classes } = useStyles();
 
   return (
-    <>
-      <div className='linkContainer'>
-        <Link to='/' className='Link'>
-          Home
-        </Link>
-        <Link to='/settings' className='Link'>
-          Settings
-        </Link>
-      </div>
-      <div className='header'>
-        <header data-testid="todo-header">
-          <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
-        </header>
-      </div>
-    </>
+    <Header data-testid='todo-header'>
+      <Navbar className={classes.navbar}>
+        <Group>
+          <Link to='/' className={classes.link}>Home</Link>
+          <Link to='/settings' className={classes.link}>Settings</Link>
+        </Group>
+      </Navbar>
+    </Header>
   )
 }
 
-export default Header
+export default BigHeader;
