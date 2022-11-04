@@ -14,14 +14,14 @@ const SettingsProvider = ({children}) =>{
 
   const [title, setTitle] = useState('Some Site');
   const [email, setEmail] = useState('someone@somesite.com');
-  const [staff, setStaff] = useState([{name: 'Ryan', position: 'Instructor'}]);
+  const [staff, setStaff] = useState([{name: 'Tim', position: 'Lead'}]);
 
   const addStaff = (person) => {
     console.log('person', person)
     if(person && person.name && person.position){
       setStaff([...staff, person]);
     } else {
-      console.log('Invalid Person!  add title and name')
+      console.log('Invalid Person! Add title and name')
     }
   }
 

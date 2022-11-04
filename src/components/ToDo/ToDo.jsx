@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { SettingsContext } from '../../Context/Settings/Settings';
 import useForm from '../../hooks/form';
 import List from '../List/List';
-
 import { createStyles, Grid, Card, Text, TextInput, Slider, Button } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
