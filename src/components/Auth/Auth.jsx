@@ -68,11 +68,11 @@ const AuthProvider = ({ children }) => {
   function validateToken(token) {
     try {
       let validUser = jwt_decode(token);
-      console.log('validUser: ', validUser);
+      // console.log('validUser: ', validUser);
       if (validUser) {
         setUser(validUser);
         setIsLoggedIn(true);
-        console.log('I am logged In')
+        // console.log('I am logged In')
         cookie.save('auth', token);
       }
     } catch (e) {

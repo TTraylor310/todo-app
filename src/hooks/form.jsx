@@ -15,7 +15,7 @@ const useForm = (callback, defaultValues={}) => {
       name = event.target.name;
       value = event.target.value;
     } else {
-      console.log('event from slider', event)
+      // console.log('event from slider', event)
       name = 'difficulty';
       value = event;
     }

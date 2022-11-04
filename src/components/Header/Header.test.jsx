@@ -1,21 +1,17 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-// import {Header} from '@mantine/core';
-import SettingsProvider, { SettingsContext } from '../../Context/Settings/Settings';
-import Header from '../Header/Header';
+import SettingsProvider from '../../Context/Settings/Settings';
+import Header from './index';
 
 describe('ToDo Component Tests', () => {
   test('render a header element as expected', () => {
     render(
       <SettingsProvider>
-        <SettingsContext.Consumer>
-          <Header />
-          {/* <BigHeader /> */}
-        </SettingsContext.Consumer>
+        <Header />
       </SettingsProvider>
     );
 
-    let header = screen.getByTestId('todo-header2');
+    let header = screen.getByTestId('todo-header');
     // let h1 = screen.getByTestId('todo-h1');
 
     expect(header).toBeTruthy();

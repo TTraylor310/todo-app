@@ -12,18 +12,6 @@ const SettingsProvider = ({children}) =>{
   const [sort, setSort] = useState('difficulty');
   const [pageItems, setPageItems] = useState(3);
 
-  const [title, setTitle] = useState('Some Site');
-  const [email, setEmail] = useState('someone@somesite.com');
-  const [staff, setStaff] = useState([{name: 'Tim', position: 'Lead'}]);
-
-  const addStaff = (person) => {
-    console.log('person', person)
-    if(person && person.name && person.position){
-      setStaff([...staff, person]);
-    } else {
-      console.log('Invalid Person! Add title and name')
-    }
-  }
 
 
   const values = {
@@ -38,12 +26,6 @@ const SettingsProvider = ({children}) =>{
     setSort,
     pageItems,
     setPageItems,
-    title,
-    setTitle,
-    email,
-    setEmail,
-    staff,
-    addStaff,
   }
 
   return (

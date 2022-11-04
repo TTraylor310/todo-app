@@ -27,7 +27,6 @@ const ToDo = () => {
   const { defaultValues, list, setList, incomplete, setIncomplete } = useContext(SettingsContext);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  
 
   function addItem(item) {
     // create POST
@@ -37,7 +36,7 @@ const ToDo = () => {
     setList([...list, item]);
   }
 
-  
+
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;

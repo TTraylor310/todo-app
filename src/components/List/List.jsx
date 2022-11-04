@@ -15,11 +15,9 @@ const useStyles = createStyles((theme) => ({
 
 const List = () => {
   const { classes } = useStyles();
-  // const { setList, pageItems, showCompleted } = useContext(SettingsContext)
   const { list, setList, pageItems, showCompleted } = useContext(SettingsContext)
-  const { can } = useContext(AuthContext);
+  // const { can } = useContext(AuthContext);
   const [page, setPage] = useState(1);
-  // const [list, setNewList] = useState([]);
 
   const listToRender = showCompleted ? list : list.filter(item => !item.complete)
   let listStart = pageItems * (page - 1);
@@ -50,14 +48,14 @@ const List = () => {
       let results = response.data.results
       console.log('check results on list:', results);
       setList(results);
-    })()
+    })();
   }, []);
 
 
   return (
     <>
       {displayList.map(item => (
-        <Card key={`${item.id}`} withBorder shadow="md" pb="xs" mb="sm">
+        <Card key={item.id} withBorder shadow="md" pb="xs" mb="sm">
           <Card.Section withBorder>
             <Group position="apart">
               <Group position="left">
