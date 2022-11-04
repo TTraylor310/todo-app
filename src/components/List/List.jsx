@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { When } from 'react-if';
 import { SettingsContext } from '../../Context/Settings/Settings';
 import { Pagination, createStyles, Card, Group, Badge, Text, CloseButton } from '@mantine/core';
 import Auth, { AuthContext } from '../Auth/Auth';
+import axios from 'axios';
 
 const useStyles = createStyles((theme) => ({
   badge: {
@@ -14,9 +15,11 @@ const useStyles = createStyles((theme) => ({
 
 const List = () => {
   const { classes } = useStyles();
+  // const { setList, pageItems, showCompleted } = useContext(SettingsContext)
   const { list, setList, pageItems, showCompleted } = useContext(SettingsContext)
   const { can } = useContext(AuthContext);
   const [page, setPage] = useState(1);
+  // const [list, setNewList] = useState([]);
 
   const listToRender = showCompleted ? list : list.filter(item => !item.complete)
   let listStart = pageItems * (page - 1);
@@ -25,6 +28,7 @@ const List = () => {
   let displayList = listToRender.slice(listStart, listEnd);
 
   function toggleComplete(id) {
+    // put/update the DB?
     const items = list.map(item => {
       if (item.id === id) {
         item.complete = !item.complete;
@@ -35,14 +39,25 @@ const List = () => {
   }
 
   function deleteItem(id) {
+    // delete from DB
     const items = list.filter(item => item.id !== id);
     setList(items);
   }
 
+  useEffect(() => {
+    (async () => {
+      let response = await axios.get('https://api-js401.herokuapp.com/api/v1/todo')
+      let results = response.data.results
+      console.log('check results on list:', results);
+      setList(results);
+    })()
+  }, []);
+
+
   return (
     <>
       {displayList.map(item => (
-        <Card key={item.id} withBorder shadow="md" pb="xs" mb="sm">
+        <Card key={`${item.id}`} withBorder shadow="md" pb="xs" mb="sm">
           <Card.Section withBorder>
             <Group position="apart">
               <Group position="left">
@@ -69,6 +84,7 @@ const List = () => {
       <When condition={listToRender.length > 0}>
         <Pagination page={page} onChange={setPage} total={pageCount} />
       </When>
+
     </>
   )
 }
