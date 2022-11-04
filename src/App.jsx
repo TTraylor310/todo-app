@@ -1,34 +1,25 @@
+import {useContext} from 'react'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {When} from 'react-if';
 import ToDo from './components/ToDo/ToDo';
 import BigHeader from './components/Header/Header';
+// import { SettingsContext } from './Context/Settings/Settings';
 import SettingsPage from './pages/Settings';
-import Auth from './components/Auth/Auth';
-// import './styles.css';
+import { AuthContext } from './components/Auth/Auth';
+
 
 const App = () => {
+  const {isLoggedIn} = useContext(AuthContext);
+
   return (
     <Router>
-      <div className='app-container'>
-        <BigHeader />
+      <BigHeader />
+      <When condition={isLoggedIn}>
         <Routes>
           <Route exact path='/' element={<ToDo />} />
           <Route path='/settings' element={<SettingsPage />} />
         </Routes>
-        <>
-        <Auth capability="read">
-        <p>I can read!</p>
-        </Auth>
-        <Auth capability="create">
-        <p>I can create!</p>
-        </Auth>
-        <Auth capability="update">
-        <p>I can update!</p>
-        </Auth>
-        <Auth capability="delete">
-        <p>I can delete!</p>
-        </Auth>
-        </>
-      </div>
+      </When>
     </Router>
   );
 }

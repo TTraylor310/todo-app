@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cookie from 'react-cookies';
 import jwt_decode from 'jwt-decode';
+// import axios from 'axios';
 
 export const AuthContext = React.createContext();
 
@@ -29,25 +30,34 @@ const AuthProvider = ({ children }) => {
 
 
   const can = (capability) => {
-    // note shorthand
     return user?.capabilities?.includes(capability);
   }
 
 
   const login = (username, password) => {
-    // today we use hard coded data, tomorrow from an actual API
     let authCredentials = testUsers[username];
 
     if(authCredentials && authCredentials.password === password){
       try {
-        // validate the token
         validateToken(authCredentials.token);
       } catch (e){
-        // maybe set error in state
         console.error(e);
       }
     }
   }
+
+  // const login = async (username, password) => {
+  //   let config = {
+  //     baseURL: 'https://api-js401.herokuapp.com',
+  //     url: '/signin',
+  //     method: 'post',
+  //     auth: {username, password},
+  //   }
+
+  //   let response = axios(config);
+    
+  // }
+
 
 
   function validateToken(token){
