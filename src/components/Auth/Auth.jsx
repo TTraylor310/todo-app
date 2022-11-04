@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cookie from 'react-cookies';
 import jwt_decode from 'jwt-decode';
-// import axios from 'axios';
+import axios from 'axios';
 
 export const AuthContext = React.createContext();
 
@@ -34,43 +34,48 @@ const AuthProvider = ({ children }) => {
   }
 
 
-  const login = (username, password) => {
-    let authCredentials = testUsers[username];
+  // const login = (username, password) => {
+  //   let authCredentials = testUsers[username];
 
-    if(authCredentials && authCredentials.password === password){
+  //   if(authCredentials && authCredentials.password === password){
+  //     try {
+  //       validateToken(authCredentials.token);
+  //     } catch (e){
+  //       console.error(e);
+  //     }
+  //   }
+  // }
+
+  const login = async (username, password) => {
+    let config = {
+      baseURL: 'https://api-js401.herokuapp.com',
+      url: '/signin',
+      method: 'post',
+      auth: { username, password },
+    }
+    let response = await axios(config);
+    console.log('check resp:', response.data);
+    let {token} = response.data;
+    if (token) {
       try {
-        validateToken(authCredentials.token);
-      } catch (e){
+        validateToken(token);
+      } catch (e) {
         console.error(e);
       }
     }
   }
 
-  // const login = async (username, password) => {
-  //   let config = {
-  //     baseURL: 'https://api-js401.herokuapp.com',
-  //     url: '/signin',
-  //     method: 'post',
-  //     auth: {username, password},
-  //   }
-
-  //   let response = axios(config);
-    
-  // }
-
-
-
-  function validateToken(token){
-    try{
+  function validateToken(token) {
+    try {
       let validUser = jwt_decode(token);
       console.log('validUser: ', validUser);
-      if(validUser){
+      if (validUser) {
         setUser(validUser);
         setIsLoggedIn(true);
         console.log('I am logged In')
         cookie.save('auth', token);
       }
-    } catch (e){
+    } catch (e) {
       setIsLoggedIn(false);
       setError(e);
       console.error(e);
@@ -82,13 +87,12 @@ const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setError(null);
     cookie.remove('auth');
-
   }
 
   // automatically login user if 'auth' cookie exists
   useEffect(() => {
     let token = cookie.load('auth');
-    if(token) {
+    if (token) {
       validateToken(token)
     }
   }, []);
@@ -101,7 +105,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
 
-  let values  = {
+  let values = {
     isLoggedIn,
     user,
     error,
@@ -112,7 +116,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={values}>
-      { children }
+      {children}
     </AuthContext.Provider>
   )
 
